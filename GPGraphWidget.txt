@@ -1,0 +1,35 @@
+GPGraphWidget2D signals:
+::region-select(GPGraphWidget2D         *widget,
+                const GdkRectangle        *rect,
+                const cairo_rectangle_t *region);
+    rect = selection rectangle in widget coordinates
+    region = selection rectangle in the plane R^2
+::activate-object(GPGraphWidget2D *widget,
+                  GPEquation      *expr);
+    expr = selected expression object
+    This is for when the user clicks on the graph of 
+    a function.
+
+TODO: first write a parser before making any object-oriented code
+enum GPOp {
+    GP_OP_RETURN,
+    GP_OP_PLUS,
+    GP_OP_MINUS,
+    GP_OP_MULT,
+    GP_OP_DIV,
+    GP_OP_EXP,
+    GP_OP_NEGATE,
+    GP_OP_FUNC
+}
+struct GPExpr {
+    enum GPOp op;
+    char *symbol;
+    double dvalue;
+    struct GPExpr *arg1;
+    struct GPExpr *arg2;
+}
+class GPEquation {
+    char dval;  // dependent value
+    color clr;
+    struct GPExpr *expr;
+}
