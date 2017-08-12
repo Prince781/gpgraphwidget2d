@@ -2,6 +2,7 @@
 #define GP_EQUATION_H
 
 #include <glib-object.h>
+#include <gdk/gdk.h>
 
 G_BEGIN_DECLS
 
@@ -15,7 +16,7 @@ struct _GPEquation
 {
     GObject              parent_instance;
     GPEquationPrivate   *priv;
-    float                color[3];
+    GdkRGBA             *color;
 };
 
 struct _GPEquationClass
@@ -23,7 +24,9 @@ struct _GPEquationClass
     GObjectClass     parent_class;
 };
 
-GPEquation  *gp_equation_new    (char dval, const char *expression);
+GPEquation  *gp_equation_new        (const char *str);
+
+void        gp_equation_set_color   (GPEquation *eq, GdkRGBA *rgba);
 
 G_END_DECLS
 

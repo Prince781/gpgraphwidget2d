@@ -27,6 +27,8 @@ struct GPExpr {
     struct GPExpr      *arg2;
 };
 
+const char *gp_expr_get_name(const struct GPExpr *expr);
+
 struct GPExpr *gp_expr_parse(const char *str);
 
 void gp_expr_print(const struct GPExpr *expr);

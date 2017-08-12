@@ -11,6 +11,18 @@ const char gp_arithmetic_ops[GP_OP_EXP - GP_OP_ADD + 1] = {
     '^'
 };
 
+const char *gp_expr_get_name(const struct GPExpr *expr)
+{
+    char buf[64];
+
+    if (expr->op != GP_OP_FUNC)
+        snprintf(buf, sizeof(buf), "%c", gp_arithmetic_ops[expr->op]);
+    else 
+        snprintf(buf, sizeof(buf) - 1, "%s", op->symbol->name);
+
+    return buf;
+}
+
 void gp_expr_print(const struct GPExpr *expr)
 {
     if (expr->op == GP_OP_RETURN) {

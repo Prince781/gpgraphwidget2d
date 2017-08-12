@@ -507,3 +507,10 @@ gp_graph_widget_2d_set_min_grid_spacing (GPGraphWidget2D *widget,
     priv = gp_graph_widget_2d_get_instance_private (widget);
     priv->min_grid_spacing = spacing;
 }
+
+void
+gp_graph_widget_2d_add_equation (GPGraphWidget2D *widget,
+                                            GPEquation *equation)
+{
+
+}
