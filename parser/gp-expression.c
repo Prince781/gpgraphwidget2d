@@ -13,12 +13,12 @@ const char gp_arithmetic_ops[GP_OP_EXP - GP_OP_ADD + 1] = {
 
 const char *gp_expr_get_name(const struct GPExpr *expr)
 {
-    char buf[64];
+    static char buf[64];
 
     if (expr->op != GP_OP_FUNC)
         snprintf(buf, sizeof(buf), "%c", gp_arithmetic_ops[expr->op]);
     else 
-        snprintf(buf, sizeof(buf) - 1, "%s", op->symbol->name);
+        snprintf(buf, sizeof(buf) - 1, "%s", expr->symbol->name);
 
     return buf;
 }
@@ -89,7 +89,7 @@ double gp_expr_eval(struct GPExpr *expr)
         double eval2 = gp_expr_eval(expr->arg2);
 
         if (eval2 == 0) {
-            fprintf(stderr, "%s: division by zero\n");
+            fprintf(stderr, "%s: division by zero\n", __func__);
             return NAN;
         }
 
@@ -97,6 +97,6 @@ double gp_expr_eval(struct GPExpr *expr)
     } else if (expr->op == GP_OP_EXP)
         return pow(gp_expr_eval(expr->arg1), gp_expr_eval(expr->arg2));
 
-    fprintf(stderr, "%s: unknown operation\n");
+    fprintf(stderr, "%s: unknown operation\n", __func__);
     return NAN;
 }

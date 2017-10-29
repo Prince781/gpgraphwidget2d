@@ -1,6 +1,7 @@
 #include "symbols.h"
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 struct GPSymRec *gp_symtab = NULL;
 
@@ -26,8 +27,8 @@ struct GPSymRec *gp_symbol_get(const char *name)
     return gp_symbol_get_r(gp_symtab, name);
 }
 
-struct GPSymRec *gp_symbol_get_r(const struct GPSymRec *symrec,
-                                    const char *name)
+struct GPSymRec *gp_symbol_get_r(struct GPSymRec *symrec,
+                                 const char *name)
 {
     while (symrec != NULL) {
         if (strcmp(symrec->name, name) == 0)

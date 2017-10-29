@@ -10,7 +10,7 @@ typedef struct yy_buffer_state *YY_BUFFER_STATE;
 extern int yycolumn, yylineno;
 extern int yylex();
 extern int yyparse();
-extern YY_BUFFER_STATE yy_scan_string(char *str);
+extern YY_BUFFER_STATE yy_scan_string(const char *str);
 extern void yy_delete_buffer(YY_BUFFER_STATE buffer);
 void yyerror(const char *s);
 
@@ -33,10 +33,8 @@ static struct GPExpr *global_expr;
 %right '^'
 
 %type <exprp> expr
-%type <exprp> expr_list
 
 %glr-parser
-%expect-rr 1
 
 %%
 input:
@@ -116,43 +114,12 @@ expr:
                     expr->arg1 = $2;
                     $$ = expr;
                 }
-| '(' error     {
-                    fprintf(stderr, "%d.%d: Unbalanced parenthesis.\n",
-                            @1.first_line, @1.first_column);
-                }
 | '(' expr ')'  {
                     struct GPExpr *expr = calloc(1, sizeof(*expr));
                     expr->op = GP_OP_RETURN;
                     expr->arg1 = $2;
                     $$ = expr;
-                }   %dprec 1
-| expr_list         %dprec 2
-| NAME '(' expr ')' {
-                    struct GPExpr *expr = calloc(1, sizeof(*expr));
-                    expr->op = GP_OP_FUNC;
-                    expr->symbol = $1;
-                    expr->arg1 = $3;
-                    $$ = expr;
                 }
-;
-
-expr_list:
-  '(' expr ')'  {
-                    struct GPExpr *expr = calloc(1, sizeof(*expr));
-                    expr->op = GP_OP_RETURN;
-                    expr->arg1 = $2;
-                    $$ = expr;
-                }
-| expr_list '(' expr ')'{
-                            struct GPExpr *elist = calloc(1, sizeof(*elist));
-                            struct GPExpr *expr = calloc(1, sizeof(*expr));
-                            elist->op = GP_OP_MULT;
-                            elist->arg1 = $1;
-                            expr->op = GP_OP_RETURN;
-                            expr->arg1 = $3;
-                            elist->arg2 = expr;
-                            $$ = elist;
-                        }
 ;
 %%
 /** Epilogue **/

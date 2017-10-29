@@ -24,7 +24,7 @@ struct GPSymRec *gp_symbol_put(const char *name, enum GPSymType type);
 
 struct GPSymRec *gp_symbol_get(const char *name);
 
-struct GPSymRec *gp_symbol_get_r(const struct GPSymRec *symrec,
+struct GPSymRec *gp_symbol_get_r(struct GPSymRec *symrec,
                                  const char *name);
 
 #endif

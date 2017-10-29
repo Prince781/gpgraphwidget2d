@@ -58,7 +58,6 @@ gp_graph_widget_2d_set_property (GObject      *object,
                                  GParamSpec   *pspec)
 {
     GPGraphWidget2D *widget = GP_GRAPH_WIDGET_2D (object);
-    GPGraphWidget2DPrivate *priv = gp_graph_widget_2d_get_instance_private (widget);
 
     switch (prop_id)
     {
@@ -116,6 +115,7 @@ gp_graph_widget_2d_get_property (GObject    *object,
     }
 }
 
+/*
 static void
 gp_graph_widget_2d_finalize (GObject *object)
 {
@@ -125,6 +125,7 @@ static void
 gp_graph_widget_2d_destroy (GtkWidget *widget)
 {
 }
+*/
 
 struct Point
 {
@@ -337,7 +338,7 @@ gp_graph_widget_2d_draw (GtkWidget *object,
 
     // draw sin(x)
     double p_dx = (priv->xmax - priv->xmin) / width;
-    double p_dy = (priv->ymax - priv->ymin) / height;
+    // double p_dy = (priv->ymax - priv->ymin) / height;
 
     double (*funcs[])(double) = { sin, tan, j0};
     static double colors[][3] = {
@@ -377,6 +378,7 @@ gp_graph_widget_2d_draw (GtkWidget *object,
     return FALSE;
 }
 
+/* TODO
 static void
 gp_graph_widget_2d_realize_cb (GtkWidget *object)
 {
@@ -386,13 +388,13 @@ gp_graph_widget_2d_realize_cb (GtkWidget *object)
     gdk_window_set_cursor (win,
             gdk_cursor_new_from_name (display, "crosshair"));
 }
+*/
 
 static void
 gp_graph_widget_2d_class_init (GPGraphWidget2DClass *class)
 {
     GObjectClass *object_class = G_OBJECT_CLASS (class);
     GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (class);
-    GtkDrawingAreaClass *darea_class = GTK_DRAWING_AREA_CLASS (class);
 
     // object_class->finalize = gp_graph_widget_2d_finalize;
     object_class->get_property = gp_graph_widget_2d_get_property;
